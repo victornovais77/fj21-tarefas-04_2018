@@ -49,6 +49,8 @@
 	</tbody>
 </table>
 
+<a href="/formularioTarefa">Nova Tarefa</a>
+
 </body>
 </html>
 
