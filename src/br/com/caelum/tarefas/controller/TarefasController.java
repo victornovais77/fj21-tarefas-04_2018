@@ -3,7 +3,9 @@ package br.com.caelum.tarefas.controller;
 import br.com.caelum.tarefas.dao.JdbcTarefaDao;
 import br.com.caelum.tarefas.modelo.Tarefa;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TarefasController {
+	
+	private JdbcTarefaDao tarefaDao;
+	
+	@Autowired
+	public TarefasController(JdbcTarefaDao tarefaDao) {
+		this.tarefaDao = tarefaDao;
+	}
 	
 	@RequestMapping("/formularioTarefa")
 	public String formulario() {
@@ -24,15 +33,13 @@ public class TarefasController {
 			return "tarefas/formulario-tarefa";
 		}
 		
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
 		tarefaDao.adiciona(tarefa);
 		
 		return "redirect:/lista";
 	}
 	
 	@RequestMapping("/lista")
-	public String lista(Model model) {
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
+	public String lista(Model model, HttpSession session) {
 		List<Tarefa> listaTarefa = tarefaDao.lista();
 		model.addAttribute("lista", listaTarefa);
 		
@@ -41,7 +48,6 @@ public class TarefasController {
 	
 	@RequestMapping("/remove")
 	public String remove(Tarefa tarefa) {
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
 		tarefaDao.remove(tarefa);
 		
 		return "redirect:/lista";
@@ -49,7 +55,6 @@ public class TarefasController {
 	
 	@RequestMapping("/mostraTarefa")
 	public String mostrar(Tarefa tarefa, Model model) {
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
 		Tarefa tarefaBanco = tarefaDao.buscaPorId(tarefa.getId());
 		model.addAttribute("tarefa", tarefaBanco);
 		
@@ -58,7 +63,6 @@ public class TarefasController {
 	
 	@RequestMapping("/altera")
 	public String altera(Tarefa tarefa) {
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
 		tarefaDao.altera(tarefa);
 		
 		return "redirect:/lista";
@@ -67,7 +71,6 @@ public class TarefasController {
 	@ResponseBody
 	@RequestMapping("/finaliza")
 	public void finaliza(Long id) {
-		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
 		tarefaDao.finaliza(id);
 	}
 

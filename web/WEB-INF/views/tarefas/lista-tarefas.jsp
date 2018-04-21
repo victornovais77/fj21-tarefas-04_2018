@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Lista de tarefas</h1>
+<h1>Lista de tarefas - ${sessionScope.usuarioLogado.login}</h1>
 
 <table>
 	<thead>
