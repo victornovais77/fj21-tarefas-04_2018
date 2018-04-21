@@ -14,14 +14,14 @@ public class TarefasController {
 	
 	@RequestMapping("/formularioTarefa")
 	public String formulario() {
-		return "formulario-tarefa";
+		return "tarefas/formulario-tarefa";
 	}
 	
 	@RequestMapping("/adicionaTarefa")
 	public String adiciona(@Valid Tarefa tarefa, BindingResult result) {
 		
 		if(result.hasFieldErrors()) {
-			return "formulario-tarefa";
+			return "tarefas/formulario-tarefa";
 		}
 		
 		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
@@ -36,7 +36,7 @@ public class TarefasController {
 		List<Tarefa> listaTarefa = tarefaDao.lista();
 		model.addAttribute("lista", listaTarefa);
 		
-		return "lista-tarefas";
+		return "tarefas/lista-tarefas";
 	}
 	
 	@RequestMapping("/remove")
@@ -53,7 +53,7 @@ public class TarefasController {
 		Tarefa tarefaBanco = tarefaDao.buscaPorId(tarefa.getId());
 		model.addAttribute("tarefa", tarefaBanco);
 		
-		return "formulario-alteracao";
+		return "tarefas/formulario-alteracao";
 	}
 	
 	@RequestMapping("/altera")
