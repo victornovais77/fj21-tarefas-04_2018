@@ -25,12 +25,12 @@
 			<tr>
 				<td>${tarefa.id}</td>
 				<td>${tarefa.descricao}</td>
-				<td>
+				<td id="tarefa-${tarefa.id}">
 				<c:if test="${tarefa.finalizado}">
 					Finalizada
 				</c:if> 
 				<c:if test="${not tarefa.finalizado}">
-					Não finalizada
+					<a href="#" onclick="finalizar(${tarefa.id})">Finalizar agora</a>
 				</c:if>
 				<td>
 						<fmt:formatDate value="${tarefa.dataFinalizacao.time}" pattern="dd/MM/yyyy" />
@@ -50,6 +50,15 @@
 </table>
 
 <a href="/formularioTarefa">Nova Tarefa</a>
+
+<script src="/resources/js/jquery.js"></script>
+<script>
+	function finalizar(id) {
+		$.post("/finaliza", {'id': id}, function() {
+			$('#tarefa-' + id).html("Finalizada");
+		});
+	}
+</script>
 
 </body>
 </html>

@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TarefasController {
@@ -62,6 +62,13 @@ public class TarefasController {
 		tarefaDao.altera(tarefa);
 		
 		return "redirect:/lista";
+	}
+
+	@ResponseBody
+	@RequestMapping("/finaliza")
+	public void finaliza(Long id) {
+		JdbcTarefaDao tarefaDao = new JdbcTarefaDao();
+		tarefaDao.finaliza(id);
 	}
 
 	
